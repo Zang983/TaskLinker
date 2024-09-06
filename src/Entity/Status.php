@@ -29,12 +29,10 @@ public function __construct()
     $this->tasks = new ArrayCollection();
 }
 
-// Définir des constantes pour les valeurs possibles
 public const STATUS_TODO = 'To Do';
 public const STATUS_DOING = 'Doing';
 public const STATUS_DONE = 'Done';
 
-// Méthode pour obtenir toutes les valeurs possibles
 public static function getAvailableStatuses(): array
 {
 return [
