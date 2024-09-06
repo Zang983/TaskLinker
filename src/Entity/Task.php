@@ -25,14 +25,14 @@ class Task
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?project $project = null;
+    private ?Project $project = null;
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
-    private ?user $user = null;
+    private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?status $status = null;
+    private ?Status $status = null;
 
     public function getId(): ?int
     {
