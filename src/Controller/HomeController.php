@@ -13,7 +13,7 @@ use App\Enum\ProjectStatus;
 ##Todo : Corriger la BDD : Corriger le modèle de la DB pour prendre en compte les dernières spécifications techniques.
 class HomeController extends AbstractController
 {
-    #[Route('/projets', name: 'projets')]
+    #[Route('/', name: 'projets')]
     public function index(): Response
     {
         return $this->render('home/index.html.twig', [
