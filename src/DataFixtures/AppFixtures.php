@@ -15,10 +15,10 @@ class AppFixtures extends Fixture
     {
 
         UserFactory::createMany(20);
-        ProjectFactory::createMany(10);
+        $projects = ProjectFactory::createMany(10);
         $statuses = StatusFactory::createMany(3);
-        TaskFactory::createMany(80, function() use ($statuses) {
-            return ['status' => $statuses[array_rand($statuses)]];
+        TaskFactory::createMany(80, function() use ($statuses,$projects) {
+            return ['status' => $statuses[array_rand($statuses)], 'project' => $projects[array_rand($projects)]];
         });
         $manager->flush();
     }
