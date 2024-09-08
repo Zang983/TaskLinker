@@ -35,8 +35,8 @@ final class UserFactory extends PersistentProxyObjectFactory
             'contract_type' => self::faker()->text(32),
             'email' => self::faker()->email(255),
             'employement_date' => self::faker()->dateTime(),
-            'firstname' => self::faker()->text(32),
-            'lastname' => self::faker()->text(32),
+            'firstname' => self::faker()->firstName(32),
+            'lastname' => self::faker()->lastName(32),
         ];
     }
 

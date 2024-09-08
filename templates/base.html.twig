@@ -7,14 +7,15 @@
     {% block stylesheets %}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
               integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
-              crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+              crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     {% endblock %}
 
 
     {% block javascripts %}
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+                integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="js/select.js"></script>
         {% block importmap %}{{ importmap('app') }}{% endblock %}
@@ -27,13 +28,15 @@
             <img src="{{ asset('img/logo.png') }}" alt="Logo TaskLinker"/>
         </a>
         <ul id="main-menu">
-            <li class="active">
-                <a href="index.html">
-                    <i class="fa-solid fa-list-check"></i> Projets
-                </a>
+            {# Récupère l'URL pour savoir où appliquer la classe active #}
+            {% set current_url = app.request.pathinfo %}
+            <li class="{{ current_url matches '/team/' ? '' : 'active' }}">
+                <a href="/">
+            <i class="fa-solid fa-list-check"></i> Projets
+            </a>
             </li>
-            <li>
-                <a href="employes.html">
+            <li class="{{ current_url matches '/team/' ? 'active' : '' }}">
+                <a href="/team">
                     <i class="fa-regular fa-user"></i> Équipe
                 </a>
             </li>
@@ -43,7 +46,9 @@
         <header>
             <div id="current-user"></div>
             <div id="title-page">
-                <h1>{{ titlePage }}</h1>
+                {% if titlePage is defined %}
+                    <h1>{{ titlePage }}</h1>
+                {% endif %}
             </div>
         </header>
         <div id="content">

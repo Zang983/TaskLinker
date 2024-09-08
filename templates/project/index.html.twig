@@ -1,107 +1,104 @@
-{% extends '../base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Hello ProjectController!{% endblock %}
 
 {% block body %}
     <div id="tasks-container">
         {% if tasksByStatus['To Do'] is defined %}
-        <div class="task-column">
-            <h2>To Do</h2>
-            {% for task in tasksByStatus['To Do'] %}
-                <div class="tasks-list">
-                    <a class="task" href="tache.html">
-                        <h3>{{ task.title }}</h3>
-                        {% if task.description is not empty %}
-                            <p>{{ task.description }}</p>
-                        {% endif %}
-                        {% if task.deadline is not empty and task.user is not empty %}
-                            <div class="task-infos">
-                                {% if task.deadline is not empty %}
-                                    <div class="task-deadline">
-                                        <i class="fa-regular fa-calendar"></i> {{ task.deadline|date('d/m/Y') }}
-                                    </div>
-                                {% endif %}
-                                {% if task.user %}
-                                    <div class="mini-user">
-                                        {{ task.user }}
-                                    </div>
-                                {% endif %}
-                            </div>
-                        {% endif %}
-                    </a>
-                </div>
-            {% else %}
-            {% endfor %}
-            <a href="tache-add.html" class="task-add">
-                + Ajouter une tâche
-            </a>
-        </div>
+            <div class="task-column">
+                <h2>To Do</h2>
+                {% for task in tasksByStatus['To Do'] %}
+                    <div class="tasks-list">
+                        <a class="task" href="tache.html">
+                            <h3>{{ task.title }}</h3>
+                            {% if task.description is not empty %}
+                                <p>{{ task.description }}</p>
+                            {% endif %}
+                            {% if task.deadline is not empty and task.user is not empty %}
+                                <div class="task-infos">
+                                    {% if task.deadline is not empty %}
+                                        <div class="task-deadline">
+                                            <i class="fa-regular fa-calendar"></i> {{ task.deadline|date('d/m/Y') }}
+                                        </div>
+                                    {% endif %}
+                                    {% if task.user %}
+                                        <div class="mini-user">
+                                            {{ task.user }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </a>
+                    </div>
+                {% endfor %}
+                <a href="tache-add.html" class="task-add">
+                    + Ajouter une tâche
+                </a>
+            </div>
         {% endif %}
         {% if tasksByStatus['Doing'] is defined %}
-        <div class="task-column">
-            <h2>Doing</h2>
-            {% for task in tasksByStatus['Doing'] %}
-                <div class="tasks-list">
-                    <a class="task" href="tache.html">
-                        <h3>{{ task.title }}</h3>
-                        {% if task.description is not empty %}
-                            <p>{{ task.description }}</p>
-                        {% endif %}
-                        {% if task.deadline is not empty and task.user is not empty %}
-                            <div class="task-infos">
-                                {% if task.deadline is not empty %}
-                                    <div class="task-deadline">
-                                        <i class="fa-regular fa-calendar"></i> {{ task.deadline|date('d/m/Y') }}
-                                    </div>
-                                {% endif %}
-                                {% if task.user %}
-                                    <div class="mini-user">
-                                        {{ task.user }}
-                                    </div>
-                                {% endif %}
-                            </div>
-                        {% endif %}
-                    </a>
-                </div>
-            {% else %}
-            {% endfor %}
-            <a href="tache-add.html" class="task-add">
-                + Ajouter une tâche
-            </a>
-        </div>
+            <div class="task-column">
+                <h2>Doing</h2>
+                {% for task in tasksByStatus['Doing'] %}
+                    <div class="tasks-list">
+                        <a class="task" href="tache.html">
+                            <h3>{{ task.title }}</h3>
+                            {% if task.description is not empty %}
+                                <p>{{ task.description }}</p>
+                            {% endif %}
+                            {% if task.deadline is not empty and task.user is not empty %}
+                                <div class="task-infos">
+                                    {% if task.deadline is not empty %}
+                                        <div class="task-deadline">
+                                            <i class="fa-regular fa-calendar"></i> {{ task.deadline|date('d/m/Y') }}
+                                        </div>
+                                    {% endif %}
+                                    {% if task.user %}
+                                        <div class="mini-user">
+                                            {{ task.user }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </a>
+                    </div>
+                {% endfor %}
+                <a href="tache-add.html" class="task-add">
+                    + Ajouter une tâche
+                </a>
+            </div>
         {% endif %}
         {% if tasksByStatus['Done'] is defined %}
-        <div class="task-column">
-            <h2>Done</h2>
-            {% for task in tasksByStatus['Done'] %}
-                <div class="tasks-list">
-                    <a class="task" href="tache.html">
-                        <h3>{{ task.title }}</h3>
-                        {% if task.description is not empty %}
-                            <p>{{ task.description }}</p>
-                        {% endif %}
-                        {% if task.deadline is not empty and task.user is not empty %}
-                            <div class="task-infos">
-                                {% if task.deadline is not empty %}
-                                    <div class="task-deadline">
-                                        <i class="fa-regular fa-calendar"></i> {{ task.deadline|date('d/m/Y') }}
-                                    </div>
-                                {% endif %}
-                                {% if task.user %}
-                                    <div class="mini-user">
-                                        {{ task.user }}
-                                    </div>
-                                {% endif %}
-                            </div>
-                        {% endif %}
-                    </a>
-                </div>
-                {% else %}
-            {% endfor %}
-            <a href="tache-add.html" class="task-add">
-                + Ajouter une tâche
-            </a>
-        </div>
+            <div class="task-column">
+                <h2>Done</h2>
+                {% for task in tasksByStatus['Done'] %}
+                    <div class="tasks-list">
+                        <a class="task" href="tache.html">
+                            <h3>{{ task.title }}</h3>
+                            {% if task.description is not empty %}
+                                <p>{{ task.description }}</p>
+                            {% endif %}
+                            {% if task.deadline is not empty and task.user is not empty %}
+                                <div class="task-infos">
+                                    {% if task.deadline is not empty %}
+                                        <div class="task-deadline">
+                                            <i class="fa-regular fa-calendar"></i> {{ task.deadline|date('d/m/Y') }}
+                                        </div>
+                                    {% endif %}
+                                    {% if task.user %}
+                                        <div class="mini-user">
+                                            {{ task.user }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </a>
+                    </div>
+                {% endfor %}
+                <a href="tache-add.html" class="task-add">
+                    + Ajouter une tâche
+                </a>
+            </div>
         {% endif %}
 
     </div>

@@ -13,7 +13,7 @@ use App\Enum\ProjectStatus;
 ##Todo : Créer les routes suivantes team/ : list/create/edit/delete/detail
 ##Todo : Reprendre le template de base pour adapter le titre de la page (Projet pour la site des projets, le nom du projet sur la page detail etc...)
 
-class HomeController extends AbstractController
+class ProjectController extends AbstractController
 {
     #[Route('/', name: 'home')]
     public function index(ProjectRepository $projectRepository): Response
@@ -24,9 +24,28 @@ class HomeController extends AbstractController
 
         $projects = $projectRepository->findAll();
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
+            'controller_name' => 'ProjectController',
             'titlePage'=> 'Projets',
             'projects' => $projects,
+        ]);
+    }
+    #[Route('/project/{id}', name: 'project_detail')]
+    public function project(int $id, ProjectRepository $projectRepository): Response
+    {
+        $project = $projectRepository->find($id);
+        $tasks = $project->getTasks();
+
+        $tasksByStatus = [
+        ];
+
+        foreach ($tasks as $task) {
+            $tasksByStatus[$task->getStatus()->getLibelle()][] = $task;
+        }
+        return $this->render('project/index.html.twig', [
+            'controller_name' => 'DetailProjectController',
+            'project' => $project,
+            'titlePage'=> $project->getName(),
+            'tasksByStatus' => $tasksByStatus,
         ]);
     }
 }
