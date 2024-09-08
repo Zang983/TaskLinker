@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Project;
 use App\Repository\ProjectRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -47,5 +49,14 @@ class ProjectController extends AbstractController
             'titlePage'=> $project->getName(),
             'tasksByStatus' => $tasksByStatus,
         ]);
+    }
+    #[Route('/project/delete/{id}', name: 'deleteProject')]
+    public function deleteProject(int $id, EntityManagerInterface $entityProjectManager): Response
+    {
+        $repository = $entityProjectManager->getRepository(Project::class);
+        $project = $repository->find($id);
+        $entityProjectManager->remove($project);
+        $entityProjectManager->flush();
+        return $this->redirectToRoute('home');
     }
 }

@@ -32,7 +32,7 @@ final class UserFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'contract_type' => self::faker()->text(32),
+            'contract_type' => self::faker()->randomElement(['CDI', 'CDD', 'Freelance', 'Stage', 'Alternance']),
             'email' => self::faker()->email(255),
             'employement_date' => self::faker()->dateTime(),
             'firstname' => self::faker()->firstName(32),

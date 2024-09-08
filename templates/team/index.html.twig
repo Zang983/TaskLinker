@@ -3,5 +3,40 @@
 {% block title %}Hello EmployeeController!{% endblock %}
 
 {% block body %}
-{{ dump(team) }}
+    <table id="team-container">
+        <thead>
+        <tr>
+            <th>Prénom, Nom</th>
+            <th>Statut</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for member in team %}
+            <tr>
+                <td>
+                    <div class="employee-infos">
+                        <div class="employee-avatar">
+                            {# Mettre les initialles de la personne ici #} TD
+                        </div>
+                        <div class="employee-coords">
+                            <strong>{{ member.firstname ~ " " ~ member.lastname}}</strong>
+                            <span>{{ member.email }}</span>
+                        </div>
+                    </div>
+                </td>
+                <td>{{ member.contractType }}</td>
+                <td>
+                    <a class="button button-edit-team" href="team/{{ member.id }}">
+                        Éditer
+                    </a>
+                    <a class="delete-team" href="team/member/delete/{{ member.id }}">
+                        Supprimer
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
 {% endblock %}
