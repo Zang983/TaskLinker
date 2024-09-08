@@ -1,9 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends '../base.html.twig' %}
 
 {% block title %}Hello ProjectController!{% endblock %}
 
 {% block body %}
     <div id="tasks-container">
+        {% if tasksByStatus['To Do'] is defined %}
         <div class="task-column">
             <h2>To Do</h2>
             {% for task in tasksByStatus['To Do'] %}
@@ -29,11 +30,14 @@
                         {% endif %}
                     </a>
                 </div>
+            {% else %}
             {% endfor %}
             <a href="tache-add.html" class="task-add">
                 + Ajouter une tâche
             </a>
         </div>
+        {% endif %}
+        {% if tasksByStatus['Doing'] is defined %}
         <div class="task-column">
             <h2>Doing</h2>
             {% for task in tasksByStatus['Doing'] %}
@@ -59,11 +63,14 @@
                         {% endif %}
                     </a>
                 </div>
+            {% else %}
             {% endfor %}
             <a href="tache-add.html" class="task-add">
                 + Ajouter une tâche
             </a>
         </div>
+        {% endif %}
+        {% if tasksByStatus['Done'] is defined %}
         <div class="task-column">
             <h2>Done</h2>
             {% for task in tasksByStatus['Done'] %}
@@ -89,11 +96,13 @@
                         {% endif %}
                     </a>
                 </div>
+                {% else %}
             {% endfor %}
             <a href="tache-add.html" class="task-add">
                 + Ajouter une tâche
             </a>
         </div>
+        {% endif %}
 
     </div>
 
