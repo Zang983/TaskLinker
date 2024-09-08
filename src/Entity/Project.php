@@ -30,13 +30,13 @@ class Project
     /**
      * @var Collection<int, user>
      */
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'projects')]
-    private Collection $user;
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'projects',cascade: ['persist'])]
+    private Collection $users;
 
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
-        $this->user = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -101,15 +101,15 @@ class Project
     /**
      * @return Collection<int, user>
      */
-    public function getUser(): Collection
+    public function getUsers(): Collection
     {
-        return $this->user;
+        return $this->users;
     }
 
     public function addUser(user $user): static
     {
-        if (!$this->user->contains($user)) {
-            $this->user->add($user);
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
         }
 
         return $this;
@@ -117,7 +117,7 @@ class Project
 
     public function removeUser(user $user): static
     {
-        $this->user->removeElement($user);
+        $this->users->removeElement($user);
 
         return $this;
     }

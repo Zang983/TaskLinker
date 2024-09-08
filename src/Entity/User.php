@@ -90,6 +90,11 @@ class User
         return $this;
     }
 
+    public function getInitials(): string
+    {
+        return strtoupper($this->firstname[0] . $this->lastname[0]);
+    }
+
     public function getContractType(): ?string
     {
         return $this->contract_type;

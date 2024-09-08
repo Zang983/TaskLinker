@@ -13,11 +13,17 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-
-        UserFactory::createMany(20);
-        $projects = ProjectFactory::createMany(10);
+        $users = UserFactory::createMany(20);
+        $projects = ProjectFactory::createMany(10, function() use ($users) {
+            // Associer plusieurs utilisateurs à chaque projet
+            $assignedUsers = [];
+            for ($i = 0; $i < rand(1, 5); $i++) {
+                $assignedUsers[] = $users[array_rand($users)];
+            }
+            return ['users' => $assignedUsers];
+        });
         $statuses = StatusFactory::createMany(3);
-        TaskFactory::createMany(80, function() use ($statuses,$projects) {
+        TaskFactory::createMany(80, function() use ($statuses, $projects) {
             return ['status' => $statuses[array_rand($statuses)], 'project' => $projects[array_rand($projects)]];
         });
         $manager->flush();

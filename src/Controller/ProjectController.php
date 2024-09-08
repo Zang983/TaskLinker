@@ -8,12 +8,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Enum\ProjectStatus;
 
-##Todo : Créer les routes suivantes project/ : list,create,edit,delete,detail.
+##Todo : Créer les routes suivantes project/ : create,edit.
 ##Todo : Créer les routes suivantes task/ : create,edit,delete.
-##Todo : Créer les routes suivantes team/ : list/create/edit/delete/detail
-##Todo : Reprendre le template de base pour adapter le titre de la page (Projet pour la site des projets, le nom du projet sur la page detail etc...)
+##Todo : Créer les routes suivantes team/ : create/edit (qui contient aussi le détail)
 
 class ProjectController extends AbstractController
 {
@@ -35,6 +33,7 @@ class ProjectController extends AbstractController
     public function project(int $id, ProjectRepository $projectRepository): Response
     {
         $project = $projectRepository->find($id);
+        $projectTeam = $project->getUsers();
         $tasks = $project->getTasks();
 
         $tasksByStatus = [
@@ -48,6 +47,7 @@ class ProjectController extends AbstractController
             'project' => $project,
             'titlePage'=> $project->getName(),
             'tasksByStatus' => $tasksByStatus,
+            'projectTeam' => $projectTeam,
         ]);
     }
     #[Route('/project/delete/{id}', name: 'deleteProject')]
