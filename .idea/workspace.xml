@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="97e06f34-e5dd-44be-bbc4-74e5e7c89e04" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/templates/team/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/team/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/project/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ProjectController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ProjectController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Project.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Project.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Factory/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Factory/UserFactory.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,7 +23,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="week2" />
+        <entry key="$PROJECT_DIR$" value="week3" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -178,7 +182,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;week3&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;week4&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -231,6 +235,8 @@
       <workItem from="1725657312127" duration="3616000" />
       <workItem from="1725739891932" duration="594000" />
       <workItem from="1725790894707" duration="9246000" />
+      <workItem from="1725974448412" duration="6342000" />
+      <workItem from="1725982397648" duration="320000" />
     </task>
     <servers />
   </component>

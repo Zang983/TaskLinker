@@ -31,12 +31,15 @@ final class UserFactory extends PersistentProxyObjectFactory
      */
     protected function defaults(): array|callable
     {
+        $firstname = self::faker()->firstName(32);
+        $lastname = self::faker()->lastName(32);
+        $email = $firstname.'.'.$lastname.'@bewize.com';
         return [
             'contract_type' => self::faker()->randomElement(['CDI', 'CDD', 'Freelance', 'Stage', 'Alternance']),
-            'email' => self::faker()->email(255),
+            'email' => $email,
             'employement_date' => self::faker()->dateTime(),
-            'firstname' => self::faker()->firstName(32),
-            'lastname' => self::faker()->lastName(32),
+            'firstname' =>$firstname,
+            'lastname' => $lastname,
         ];
     }
 
