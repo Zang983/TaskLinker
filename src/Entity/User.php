@@ -99,6 +99,11 @@ class User
         return strtoupper($this->firstname[0] . $this->lastname[0]);
     }
 
+    public function getFullName(): string
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
     public function getContractType(): ?string
     {
         return $this->contract_type;

@@ -19,7 +19,7 @@ class Project
     private ?string $name = null;
 
     #[ORM\Column]
-    private ?bool $archived = null;
+    private ?bool $archived = FALSE;
 
     /**
      * @var Collection<int, Task>

@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Project;
+use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -17,22 +19,65 @@ class ProjectController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(ProjectRepository $projectRepository): Response
     {
-        // Ajoutez du code de débogage pour afficher les informations sur les classes
-        $userClass = \App\Entity\User::class;
-        $loadedClass = get_class(new \App\Entity\User());
-
         $projects = $projectRepository->findAll();
-        return $this->render('home/index.html.twig', [
+        return $this->render('project/index.html.twig', [
             'controller_name' => 'ProjectController',
             'titlePage' => 'Projets',
             'projects' => $projects,
         ]);
     }
 
-    #[Route('/project/{id}', name: 'project_detail')]
-    public function project(int $id, ProjectRepository $projectRepository): Response
+    #[Route('/project/create', name: 'create_project')]
+    public function createProject(Request $request, EntityManagerInterface $entityProjectManager): Response
     {
-        $project = $projectRepository->find($id);
+        $form = $this->createForm(ProjectType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $project = $form->getData();
+            $entityProjectManager->persist($project);
+            $entityProjectManager->flush();
+            return $this->redirectToRoute('home');
+        }
+        return $this->render('project/form.html.twig', [
+            'controller_name' => 'CreateProjectController',
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/project/delete/{id}', name: 'delete_project')]
+    public function deleteProject(EntityManagerInterface $entityProjectManager, Project $project): Response
+    {
+        $entityProjectManager->remove($project);
+        $entityProjectManager->flush();
+        return $this->redirectToRoute('home');
+    }
+
+    #[Route('/project/edit/{id}', name: 'edit_project')]
+    public function editProject(
+        Project $project,
+        EntityManagerInterface $entityProjectManager,
+        Request $request
+    ): Response {
+        $form = $this->createForm(ProjectType::class, $project);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $project = $form->getData();
+            $entityProjectManager->persist($project);
+            $entityProjectManager->flush();
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('project/form.html.twig', [
+            'controller_name' => 'EditProjectController',
+            'titlePage' => 'Édition du projet : ' . $project->getName(),
+            'project' => $project,
+            'form' => $form
+        ]);
+    }
+
+    #[Route('/project/detail/{id}', name: 'project_detail')]
+    public function project(Project $project): Response
+    {
         $projectTeam = $project->getUsers();
         $tasks = $project->getTasks();
 
@@ -42,7 +87,7 @@ class ProjectController extends AbstractController
         foreach ($tasks as $task) {
             $tasksByStatus[$task->getStatus()->getLibelle()][] = $task;
         }
-        return $this->render('project/index.html.twig', [
+        return $this->render('project/detail.html.twig', [
             'controller_name' => 'DetailProjectController',
             'project' => $project,
             'titlePage' => $project->getName(),
@@ -51,24 +96,4 @@ class ProjectController extends AbstractController
         ]);
     }
 
-    #[Route('/project/delete/{id}', name: 'deleteProject')]
-    public function deleteProject(int $id, EntityManagerInterface $entityProjectManager): Response
-    {
-        $repository = $entityProjectManager->getRepository(Project::class);
-        $project = $repository->find($id);
-        $entityProjectManager->remove($project);
-        $entityProjectManager->flush();
-        return $this->redirectToRoute('home');
-    }
-    #[Route('/project/edit/{id}', name: 'editProject')]
-public function editProject(int $id,EntityManagerInterface $entityProjectManager):Response{
-        $repository = $entityProjectManager->getRepository(Project::class);
-        $project = $repository->find($id);
-
-        return $this->render('project/edit.html.twig', [
-            'controller_name' => 'EditProjectController',
-            'titlePage' => 'Édition du projet : '.$project->getName(),
-            'project' => $project,
-        ]);
-    }
 }
