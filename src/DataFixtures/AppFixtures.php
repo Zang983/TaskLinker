@@ -22,9 +22,12 @@ class AppFixtures extends Fixture
             }
             return ['users' => $assignedUsers];
         });
-        $statuses = StatusFactory::createMany(3);
+//        $statuses = StatusFactory::createMany(3);
         TaskFactory::createMany(80, function() use ($statuses, $projects) {
-            return ['status' => $statuses[array_rand($statuses)], 'project' => $projects[array_rand($projects)]];
+            $project = $projects[array_rand($projects)];
+            $projectUsers = $project->getUsers()->toArray();
+            $user = $project->getUsers()[array_rand($projectUsers)];
+            return ['status' => $statuses[array_rand($statuses)], 'project' => $project, 'user'=>$user];
         });
         $manager->flush();
     }
