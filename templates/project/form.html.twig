@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
-{% block title %}Création d'un nouveau projet{% endblock %}
+{% block title %}{{ titleBlock }}{% endblock %}
 
 {% block body %}
-    <div id="content">
+
         {{ form_start(form) }}
         {{ form_row(form.name) }}
         {{ form_row(form.users) }}
         {{ form_end(form) }}
-    </div>
+
 
 {% endblock %}

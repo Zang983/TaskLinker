@@ -27,7 +27,7 @@
                 </td>
                 <td>{{ member.contractType }}</td>
                 <td>
-                    <a class="button button-edit-team" href="team/{{ member.id }}">
+                    <a class="button button-edit-team" href="{{ path('edit_member',{id:member.id}) }}">
                         Éditer
                     </a>
                     <a class="delete-team" href="team/member/delete/{{ member.id }}">

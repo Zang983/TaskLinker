@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -19,6 +21,25 @@ class TeamController extends AbstractController
             'controller_name' => 'TeamController',
             'titlePage' => 'Équipe',
             'team' => $team
+        ]);
+    }
+
+    #[Route('/team/edit/{id}', name: 'edit_member')]
+    public function editMember(User $user, EntityManagerInterface $entityUserManager,Request $request): Response
+    {
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $entityUserManager->flush();
+            return $this->redirectToRoute('team');
+        }
+
+        return $this->render('/team/form.html.twig', [
+            'controller_name' => 'EditMemberController',
+            'titlePage' => $user->getFullName(),
+            'titleBlock' => 'Modifier un membre',
+            'user' => $user,
+            'form' => $form
         ]);
     }
 

@@ -41,6 +41,7 @@ class ProjectController extends AbstractController
         return $this->render('project/form.html.twig', [
             'controller_name' => 'CreateProjectController',
             'form' => $form,
+            'titleBlock' => 'Nouveau projet'
         ]);
     }
 
@@ -69,7 +70,8 @@ class ProjectController extends AbstractController
 
         return $this->render('project/form.html.twig', [
             'controller_name' => 'EditProjectController',
-            'titlePage' => 'Édition du projet : ' . $project->getName(),
+            'titlePage' => $project->getName(),
+            'titleBlock' => $project->getName(),
             'project' => $project,
             'form' => $form
         ]);
