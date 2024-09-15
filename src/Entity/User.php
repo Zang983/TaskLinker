@@ -40,8 +40,12 @@ class User
     /**
      * @var Collection<int, Project>
      */
-    #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'user')]
+    #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'users')]
     private Collection $projects;
+
+    /**
+     * @var Collection<int, Project>
+     */
 
     public function __construct()
     {
@@ -175,4 +179,6 @@ class User
 
         return $this;
     }
+
+
 }

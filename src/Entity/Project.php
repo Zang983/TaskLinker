@@ -28,10 +28,12 @@ class Project
     private Collection $tasks;
 
     /**
-     * @var Collection<int, user>
+     * @var Collection<int, User>
      */
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'projects',cascade: ['persist'])]
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'projects')]
     private Collection $users;
+
+
 
     public function __construct()
     {
@@ -89,6 +91,7 @@ class Project
     public function removeTask(Task $task): static
     {
         if ($this->tasks->removeElement($task)) {
+            // set the owning side to null (unless already changed)
             if ($task->getProject() === $this) {
                 $task->setProject(null);
             }
@@ -98,14 +101,14 @@ class Project
     }
 
     /**
-     * @return Collection<int, user>
+     * @return Collection<int, User>
      */
     public function getUsers(): Collection
     {
         return $this->users;
     }
 
-    public function addUser(user $user): static
+    public function addUser(User $user): static
     {
         if (!$this->users->contains($user)) {
             $this->users->add($user);
@@ -114,10 +117,12 @@ class Project
         return $this;
     }
 
-    public function removeUser(user $user): static
+    public function removeUser(User $user): static
     {
         $this->users->removeElement($user);
 
         return $this;
     }
+
+
 }
