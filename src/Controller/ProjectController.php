@@ -97,8 +97,9 @@ class ProjectController extends AbstractController
             }
             $tasksByStatus[$idStatus]["tasks"][] = $task;
         }
-
-
+        usort($tasksByStatus, function($a, $b) {
+            return $a['idStatus'] <=> $b['idStatus'];
+        });
         return $this->render('project/detail.html.twig', [
             'controller_name' => 'DetailProjectController',
             'project' => $project,
