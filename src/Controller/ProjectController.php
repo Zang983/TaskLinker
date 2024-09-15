@@ -87,8 +87,18 @@ class ProjectController extends AbstractController
         ];
 
         foreach ($tasks as $task) {
-            $tasksByStatus[$task->getStatus()->getLibelle()][] = $task;
+            $idStatus = $task->getStatus()->getId();
+            if(!isset($tasksByStatus[$idStatus])){
+                $tasksByStatus[$idStatus] = [
+                    "idStatus"=>$idStatus,
+                    "libelleStatus"=>$task->getStatus()->getLibelle(),
+                    "tasks"=>[]
+                ];
+            }
+            $tasksByStatus[$idStatus]["tasks"][] = $task;
         }
+
+
         return $this->render('project/detail.html.twig', [
             'controller_name' => 'DetailProjectController',
             'project' => $project,

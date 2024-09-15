@@ -32,12 +32,12 @@
             {# Récupère l'URL pour savoir où appliquer la classe active #}
             {% set current_url = app.request.pathinfo %}
             <li class="{{ current_url matches '/team/' ? '' : 'active' }}">
-                <a href="/">
+                <a href={{ path('home') }}>
                     <i class="fa-solid fa-list-check"></i> Projets
                 </a>
             </li>
             <li class="{{ current_url matches '/team/' ? 'active' : '' }}">
-                <a href="/team">
+                <a href="{{ path('team') }}">
                     <i class="fa-regular fa-user"></i> Équipe
                 </a>
             </li>
