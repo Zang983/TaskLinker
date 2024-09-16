@@ -28,6 +28,7 @@ class TaskController extends AbstractController
         }
         $form = $this->createForm(TaskType::class, null, [
             'status' => $status,
+            'users' => $project->getUsers()
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -49,6 +50,7 @@ class TaskController extends AbstractController
     {
         $form = $this->createForm(TaskType::class,$task, [
             'status' => $task->getStatus(),
+            'users' => $task->getProject()->getUsers()
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -57,7 +59,6 @@ class TaskController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('project_detail', ['id' => $task->getProject()->getId()]);
         }
-
         return $this->render('task/form.html.twig', [
             'controller_name' => 'TaskController',
             'titlePage' => $task->getTitle(),

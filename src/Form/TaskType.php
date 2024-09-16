@@ -15,8 +15,6 @@ class TaskType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
-
         $builder
             ->add('title')
             ->add('description')
@@ -30,6 +28,7 @@ class TaskType extends AbstractType
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
+                'choices'=>$options['users'],
                 'choice_label' => 'fullname',
             ])
             ->add(isset($options['data']) ? "Modifier" : "Ajouter", SubmitType::class, ['attr' => ['class' => 'button button-submit']]);
@@ -40,6 +39,7 @@ class TaskType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Task::class,
             'status'=>null,
+            'users'=>null,
         ]);
 
     }
