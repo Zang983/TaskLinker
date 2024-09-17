@@ -22,11 +22,14 @@ class TeamController extends AbstractController
             'titlePage' => 'Équipe',
             'team' => $team
         ]);
-    }
 
+    }
     #[Route('/team/edit/{id}', name: 'edit_member')]
     public function editMember(User $user, EntityManagerInterface $entityUserManager,Request $request): Response
     {
+        if(!$user){
+            throw $this->createNotFoundException('User not found');
+        }
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
@@ -46,6 +49,9 @@ class TeamController extends AbstractController
     #[Route('/team/member/detail/{id}', name: 'detailMember')]
     public function detailMember(UserRepository $userRepository): Response
     {
+        if(!$user){
+            throw $this->createNotFoundException('User not found');
+        }
         $team = $userRepository->find();
         return $this->render('team/index.html.twig', [
             'controller_name' => 'TeamController',
@@ -57,6 +63,9 @@ class TeamController extends AbstractController
     #[Route('/team/member/delete/{id}', name: 'deleteMember')]
     public function deleteMember(int $id, EntityManagerInterface $entityUserManager): Response
     {
+        if(!$user){
+            throw $this->createNotFoundException('User not found');
+        }
         $repository = $entityUserManager->getRepository(User::class);
         $user = $repository->find($id);
         $entityUserManager->remove($user);

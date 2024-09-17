@@ -45,10 +45,14 @@ class TaskController extends AbstractController
             'form' => $form
         ]);
     }
+
     #[Route('/task/edit/{id}', name: 'edit_task')]
-    public function editTask(Task $task,Request $request,EntityManagerInterface $entityManager): Response
+    public function editTask(Task $task, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(TaskType::class,$task, [
+        if (!$task) {
+            throw $this->createNotFoundException('Task not found');
+        }
+        $form = $this->createForm(TaskType::class, $task, [
             'status' => $task->getStatus(),
             'users' => $task->getProject()->getUsers()
         ]);
@@ -63,12 +67,16 @@ class TaskController extends AbstractController
             'controller_name' => 'TaskController',
             'titlePage' => $task->getTitle(),
             'form' => $form,
-            'task'=>$task
+            'task' => $task
         ]);
     }
+
     #[Route('/task/delete/{id}', name: 'delete_task')]
-    public function deleteTask(Task $task,EntityManagerInterface $entityManager): Response
+    public function deleteTask(Task $task, EntityManagerInterface $entityManager): Response
     {
+        if (!$task) {
+            throw $this->createNotFoundException('Task not found');
+        }
         $idProject = $task->getProject()->getId();
         $entityManager->remove($task);
         $entityManager->flush();

@@ -48,6 +48,9 @@ class ProjectController extends AbstractController
     #[Route('/project/delete/{id}', name: 'delete_project')]
     public function deleteProject(EntityManagerInterface $entityProjectManager, Project $project): Response
     {
+        if (!$project) {
+            throw $this->createNotFoundException('Project not found');
+        }
         $entityProjectManager->remove($project);
         $entityProjectManager->flush();
         return $this->redirectToRoute('home');
@@ -59,6 +62,9 @@ class ProjectController extends AbstractController
         EntityManagerInterface $entityProjectManager,
         Request $request
     ): Response {
+        if (!$project) {
+            throw $this->createNotFoundException('Project not found');
+        }
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -80,6 +86,9 @@ class ProjectController extends AbstractController
     #[Route('/project/detail/{id}', name: 'project_detail')]
     public function project(Project $project): Response
     {
+        if (!$project) {
+            throw $this->createNotFoundException('Project not found');
+        }
         $projectTeam = $project->getUsers();
         $tasks = $project->getTasks();
 
@@ -88,16 +97,16 @@ class ProjectController extends AbstractController
 
         foreach ($tasks as $task) {
             $idStatus = $task->getStatus()->getId();
-            if(!isset($tasksByStatus[$idStatus])){
+            if (!isset($tasksByStatus[$idStatus])) {
                 $tasksByStatus[$idStatus] = [
-                    "idStatus"=>$idStatus,
-                    "libelleStatus"=>$task->getStatus()->getLibelle(),
-                    "tasks"=>[]
+                    "idStatus" => $idStatus,
+                    "libelleStatus" => $task->getStatus()->getLibelle(),
+                    "tasks" => []
                 ];
             }
             $tasksByStatus[$idStatus]["tasks"][] = $task;
         }
-        usort($tasksByStatus, function($a, $b) {
+        usort($tasksByStatus, function ($a, $b) {
             return $a['idStatus'] <=> $b['idStatus'];
         });
         return $this->render('project/detail.html.twig', [
