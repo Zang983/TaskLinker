@@ -19,16 +19,16 @@ class ProjectType extends AbstractType
                 'label' => 'Titre du projet',
             ])
             ->add('users', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'fullName',
-                'multiple' => true,
-                'label'=>'Inviter des membres'
-            ]
+                    'class' => User::class,
+                    'choice_label' => 'fullName',
+                    'multiple' => true,
+                    'label' => 'Inviter des membres',
+                    'by_reference' => false,
+                ]
             )
             ->add('Continuer', SubmitType::class, [
-                'attr'=>['class'=>'button button-submit']
-            ])
-        ;
+                'attr' => ['class' => 'button button-submit']
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

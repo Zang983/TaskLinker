@@ -168,6 +168,7 @@ class User
 
     public function addProject(Project $project): static
     {
+        dd("AddProject dans user");
         if (!$this->projects->contains($project)) {
             $this->projects->add($project);
             $project->addUser($this);
@@ -178,7 +179,10 @@ class User
 
     public function removeProject(Project $project): static
     {
+        dd("RemoveProject dans user");
         if ($this->projects->removeElement($project)) {
+            dd("RemoveProject dans user");
+
             $project->removeUser($this);
         }
 

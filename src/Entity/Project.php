@@ -19,7 +19,7 @@ class Project
     private ?string $name = null;
 
     #[ORM\Column]
-    private ?bool $archived = FALSE;
+    private ?bool $archived = false;
 
     /**
      * @var Collection<int, Task>
@@ -32,7 +32,6 @@ class Project
      */
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'projects')]
     private Collection $users;
-
 
 
     public function __construct()
@@ -120,7 +119,11 @@ class Project
     public function removeUser(User $user): static
     {
         $this->users->removeElement($user);
-
+        $this->getTasks()->map(function(Task $task) use ($user) {
+            if ($task->getUser() === $user) {
+                $task->setUser(null);
+            }
+        });
         return $this;
     }
 
