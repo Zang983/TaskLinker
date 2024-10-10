@@ -11,8 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-## TODO : Gérer la création/édition et suppression de projets / utilisateurs / tâches (suppression également pour ce dernier)
-## TODO : Faire un dernier check pour voir si tout est OK
+## TODO : Assertion E-mail pour la team vérifier les autres.
 
 class ProjectController extends AbstractController
 {
