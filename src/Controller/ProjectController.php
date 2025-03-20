@@ -45,7 +45,7 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/project/delete/{id}', name: 'delete_project')]
-    public function deleteProject(EntityManagerInterface $entityProjectManager, Project $project): Response
+    public function deleteProject(EntityManagerInterface $entityProjectManager, Project $project = null ): Response
     {
         if (!$project) {
             throw $this->createNotFoundException('Project not found');
@@ -57,9 +57,9 @@ class ProjectController extends AbstractController
 
     #[Route('/project/edit/{id}', name: 'edit_project')]
     public function editProject(
-        Project $project,
         EntityManagerInterface $entityProjectManager,
-        Request $request
+        Request $request,
+        Project $project = null
     ): Response {
         if (!$project) {
             throw $this->createNotFoundException('Project not found');
@@ -83,7 +83,7 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/project/detail/{id}', name: 'project_detail')]
-    public function project(Project $project): Response
+    public function project(Project $project = null): Response
     {
         if (!$project) {
             throw $this->createNotFoundException('Project not found');

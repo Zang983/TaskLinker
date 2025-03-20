@@ -16,11 +16,12 @@ class TaskController extends AbstractController
 {
     #[Route('/task/create/{idStatus}/{idProject}', name: 'create_task')]
     public function index(
-        Request $request,
-        int $idStatus,
-        int $idProject,
+        Request                $request,
+        int                    $idStatus,
+        int                    $idProject,
         EntityManagerInterface $entityManager
-    ): Response {
+    ): Response
+    {
         $status = $entityManager->getRepository(Status::class)->find($idStatus);
         $project = $entityManager->getRepository(Project::class)->find($idProject);
         if (!$status || !$project) {
@@ -47,7 +48,7 @@ class TaskController extends AbstractController
     }
 
     #[Route('/task/edit/{id}', name: 'edit_task')]
-    public function editTask(Task $task, Request $request, EntityManagerInterface $entityManager): Response
+    public function editTask(Request $request, EntityManagerInterface $entityManager, Task $task = null): Response
     {
         if (!$task) {
             throw $this->createNotFoundException('Task not found');
@@ -72,7 +73,7 @@ class TaskController extends AbstractController
     }
 
     #[Route('/task/delete/{id}', name: 'delete_task')]
-    public function deleteTask(Task $task, EntityManagerInterface $entityManager): Response
+    public function deleteTask(EntityManagerInterface $entityManager, Task $task = null): Response
     {
         if (!$task) {
             throw $this->createNotFoundException('Task not found');

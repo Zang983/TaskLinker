@@ -24,15 +24,16 @@ class TeamController extends AbstractController
         ]);
 
     }
+
     #[Route('/team/edit/{id}', name: 'edit_member')]
-    public function editMember(User $user, EntityManagerInterface $entityUserManager,Request $request): Response
+    public function editMember(EntityManagerInterface $entityUserManager, Request $request, User $user = null): Response
     {
-        if(!$user){
+        if (!$user) {
             throw $this->createNotFoundException('User not found');
         }
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $entityUserManager->flush();
             return $this->redirectToRoute('team');
         }
@@ -46,24 +47,10 @@ class TeamController extends AbstractController
         ]);
     }
 
-    #[Route('/team/member/detail/{id}', name: 'detailMember')]
-    public function detailMember(UserRepository $userRepository): Response
-    {
-        if(!$user){
-            throw $this->createNotFoundException('User not found');
-        }
-        $team = $userRepository->find();
-        return $this->render('team/index.html.twig', [
-            'controller_name' => 'TeamController',
-            'titlePage' => 'Équipe',
-            'team' => $team
-        ]);
-    }
-
     #[Route('/team/member/delete/{id}', name: 'deleteMember')]
-    public function deleteMember(User $user, EntityManagerInterface $entityUserManager): Response
+    public function deleteMember(EntityManagerInterface $entityUserManager, User $user = null): Response
     {
-        if(!$user){
+        if (!$user) {
             throw $this->createNotFoundException('User not found');
         }
         $entityUserManager->remove($user);
